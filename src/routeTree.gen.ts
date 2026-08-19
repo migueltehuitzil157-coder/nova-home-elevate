@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoofingRouteImport } from './routes/roofing'
 import { Route as SolarRouteImport } from './routes/solar'
+import { Route as WaterRouteImport } from './routes/water'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const SolarRoute = SolarRouteImport.update({
   path: '/solar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WaterRoute = WaterRouteImport.update({
+  id: '/water',
+  path: '/water',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/roofing': typeof RoofingRoute
   '/solar': typeof SolarRoute
+  '/water': typeof WaterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/roofing': typeof RoofingRoute
   '/solar': typeof SolarRoute
+  '/water': typeof WaterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/roofing': typeof RoofingRoute
   '/solar': typeof SolarRoute
+  '/water': typeof WaterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/roofing' | '/solar'
+  fullPaths: '/' | '/roofing' | '/solar' | '/water'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/roofing' | '/solar'
-  id: '__root__' | '/' | '/roofing' | '/solar'
+  to: '/' | '/roofing' | '/solar' | '/water'
+  id: '__root__' | '/' | '/roofing' | '/solar' | '/water'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RoofingRoute: typeof RoofingRoute
   SolarRoute: typeof SolarRoute
+  WaterRoute: typeof WaterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/water': {
+      id: '/water'
+      path: '/water'
+      fullPath: '/water'
+      preLoaderRoute: typeof WaterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RoofingRoute: RoofingRoute,
   SolarRoute: SolarRoute,
+  WaterRoute: WaterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
