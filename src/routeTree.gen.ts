@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as RoofingRouteImport } from './routes/roofing'
 import { Route as SolarRouteImport } from './routes/solar'
 import { Route as WaterRouteImport } from './routes/water'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RoofingRoute = RoofingRouteImport.update({
@@ -44,6 +50,7 @@ const WaterRoute = WaterRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/roofing': typeof RoofingRoute
   '/solar': typeof SolarRoute
   '/water': typeof WaterRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/roofing': typeof RoofingRoute
   '/solar': typeof SolarRoute
   '/water': typeof WaterRoute
@@ -59,21 +67,24 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/roofing': typeof RoofingRoute
   '/solar': typeof SolarRoute
   '/water': typeof WaterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/roofing' | '/solar' | '/water'
+  fullPaths: '/' | '/about' | '/contact' | '/roofing' | '/solar' | '/water'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/roofing' | '/solar' | '/water'
-  id: '__root__' | '/' | '/about' | '/roofing' | '/solar' | '/water'
+  to: '/' | '/about' | '/contact' | '/roofing' | '/solar' | '/water'
+  id:
+    '__root__' | '/' | '/about' | '/contact' | '/roofing' | '/solar' | '/water'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
   RoofingRoute: typeof RoofingRoute
   SolarRoute: typeof SolarRoute
   WaterRoute: typeof WaterRoute
@@ -93,6 +104,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/roofing': {
@@ -122,6 +140,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
   RoofingRoute: RoofingRoute,
   SolarRoute: SolarRoute,
   WaterRoute: WaterRoute,
