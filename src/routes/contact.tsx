@@ -58,8 +58,8 @@ function ContactPage() {
                 ))}
               </dl>
 
-              <div className="mt-14 hidden justify-start lg:flex">
-                <NewJerseyMap className="h-64 w-auto text-navy-foreground/70" />
+              <div className="mt-12 hidden justify-start lg:flex">
+                <NewJerseyMap className="h-56 w-auto text-navy-foreground/60" />
               </div>
             </div>
 
