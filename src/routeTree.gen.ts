@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RoofingRouteImport } from './routes/roofing'
 import { Route as SolarRouteImport } from './routes/solar'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoofingRoute = RoofingRouteImport.update({
+  id: '/roofing',
+  path: '/roofing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolarRoute = SolarRouteImport.update({
@@ -25,27 +31,31 @@ const SolarRoute = SolarRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/roofing': typeof RoofingRoute
   '/solar': typeof SolarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/roofing': typeof RoofingRoute
   '/solar': typeof SolarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/roofing': typeof RoofingRoute
   '/solar': typeof SolarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/solar'
+  fullPaths: '/' | '/roofing' | '/solar'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/solar'
-  id: '__root__' | '/' | '/solar'
+  to: '/' | '/roofing' | '/solar'
+  id: '__root__' | '/' | '/roofing' | '/solar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RoofingRoute: typeof RoofingRoute
   SolarRoute: typeof SolarRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roofing': {
+      id: '/roofing'
+      path: '/roofing'
+      fullPath: '/roofing'
+      preLoaderRoute: typeof RoofingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solar': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RoofingRoute: RoofingRoute,
   SolarRoute: SolarRoute,
 }
 export const routeTree = rootRouteImport
