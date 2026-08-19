@@ -19,7 +19,7 @@ export function LeadForm({
   defaultService,
   variant = "light",
 }: {
-  defaultService?: string;
+  defaultService?: string | undefined;
   variant?: "light" | "dark";
 }) {
   const [values, setValues] = useState<Values>({ ...EMPTY, service: defaultService ?? "" });
@@ -150,7 +150,7 @@ function Field({
   children,
 }: {
   label: string;
-  error?: string;
+  error?: string | undefined;
   labelCls: string;
   children: React.ReactNode;
 }) {
